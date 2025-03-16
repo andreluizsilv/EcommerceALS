@@ -1,12 +1,19 @@
 from django.shortcuts import render
-
+from .models import *
 # Create your views here.
 def homepage(request):
-    return render(request,'homepage.html')
+    banners = Banner.objects.filter(ativo=True)
+    context = {'banners': banners}
+    return render(request,'homepage.html', context)
 
 
-def loja(request):
-    return render(request,'loja.html')
+def loja(request, nome_departamento= None):
+    produtos = Produto.objects.filter(ativo=True)
+    if nome_departamento:
+        produtos = produtos.filter(departamento__nome=nome_departamento)
+        print(produtos)
+    context = {'produtos': produtos}
+    return render(request,'loja.html', context)
 
 def carrinho(request):
     return render(request,'carrinho.html')

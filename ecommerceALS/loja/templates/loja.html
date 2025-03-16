@@ -2,8 +2,31 @@
 {% load static %}
 
 {% block content %}
-
- <h1>Essa é Minha Loja</h1>
-
-
+<h1>Produtos Disponíveis</h1>
+<div class="container">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    {% for produto in produtos %}
+    <div class="col">
+      <div class="card">
+        <div class="card-image">
+          {% if produto.imagem %}
+          <img src="{{ produto.imagem.url }}" alt="{{ produto.nome_produto }}">
+          {% endif %}
+        </div>
+        <div class="card-body">
+          {% if produto.descricao %}
+            <h5 class="card-title">{{ produto.descricao|default:"N/A" }}</h5>
+            <p class="card-text">Preço: R$ {{ produto.preco|default:"N/A" }} {{ produto.unidade|default:"N/A" }}</p>
+          {% else %}
+            <h5 class="card-title">{{ produto.nome_produto|default:"N/A" }}</h5>
+            <p class="card-text">Preço: R$ {{ produto.preco|default:"N/A" }} {{ produto.unidade|default:"N/A" }}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>Nenhum produto encontrado.</p>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

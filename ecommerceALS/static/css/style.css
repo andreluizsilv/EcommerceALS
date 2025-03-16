@@ -6,3 +6,64 @@ body {
     font-family: Arial, sans-serif;
     color: white;
 }
+
+
+.container {
+    padding: 20px;
+}
+
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+.card-image {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+
+.card-image img {
+    max-width: 100%;
+    max-height: 150px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+
+.card-body {
+    padding: 15px;
+    flex: 0;
+}
+
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+
+@media (max-width: 768px) {
+    .row-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

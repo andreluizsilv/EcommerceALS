@@ -2,7 +2,22 @@
 {% load static %}
 
 {% block content %}
- <h1>Essa é Minha Pagina Homepage</h1>
+<div class="container">
+    <h1 class="text-center my-4">Essa é Minha Página Homepage</h1>
 
-
+    <div class="row">
+        {% for banner in banners %}
+        <div class="col-md-4 mb-4"> <!-- 3 banners por linha em telas médias/grandes -->
+            <div class="card h-100">
+                <a href="{% url 'loja' %}{{ banner.link_destino }}">
+                    <img src="{{ banner.imagem.url }}" class="card-img-top" alt="{{ banner.link_destino }}">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ banner.link_destino }}</h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
