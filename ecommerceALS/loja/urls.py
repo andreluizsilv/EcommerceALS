@@ -7,8 +7,12 @@ urlpatterns = [
     path('loja/', loja, name="loja"),
     path('loja/<str:nome_departamento>/', loja, name="loja"),
 
+    path('produto/<int:id_produto>/', ver_produto, name="ver_produto"),
+
     path('minhaconta/', minha_conta, name="minha_conta"),
     path('login/', login, name="login"),
     path('checkout/', checkout, name="checkout"),
     path('carrinho/', carrinho, name="carrinho"),
+    path('adicionarcarrinho/<int:id_produto>/', adicionar_carrinho, name="adicionar_carrinho"),
+
 ]

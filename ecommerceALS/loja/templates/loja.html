@@ -2,30 +2,46 @@
 {% load static %}
 
 {% block content %}
-<h1>Produtos Disponíveis</h1>
 <div class="container">
-  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+  <h1 class="text-center">Produtos</h1>
+
+  <div class="row justify-content-center">
     {% for produto in produtos %}
-    <div class="col">
-      <div class="card">
-        <div class="card-image">
-          {% if produto.imagem %}
-          <img src="{{ produto.imagem.url }}" alt="{{ produto.nome_produto }}">
-          {% endif %}
-        </div>
-        <div class="card-body">
-          {% if produto.descricao %}
-            <h5 class="card-title">{{ produto.descricao|default:"N/A" }}</h5>
-            <p class="card-text">Preço: R$ {{ produto.preco|default:"N/A" }} {{ produto.unidade|default:"N/A" }}</p>
-          {% else %}
-            <h5 class="card-title">{{ produto.nome_produto|default:"N/A" }}</h5>
-            <p class="card-text">Preço: R$ {{ produto.preco|default:"N/A" }} {{ produto.unidade|default:"N/A" }}</p>
-          {% endif %}
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-image">
+            {% if produto.imagem %}
+              <img src="{{ produto.imagem.url }}" alt="{{ produto.nome_produto }}" class="img-fluid img-moldura">
+            {% else %}
+              <p>Imagem não disponível</p>
+            {% endif %}
+          </div>
+
+          <div class="card-body">
+            <h5 class="card-title">{{ produto.nome_produto }}</h5>
+            {% if produto.descricao %}
+              <p class="card-text">{{ produto.descricao }}</p>
+            {% endif %}
+            <p class="card-text">R$ {{ produto.preco }} por {{ produto.unidade }}</p>
+
+            {% if produto.itemestoque_set.all %}
+              <!-- Exibe o formulário se houver itens em estoque -->
+              <form method="post" action="{% url 'adicionar_carrinho' produto.id %}">
+                {% csrf_token %}
+                <div class="d-flex align-items-center mb-3">
+                  <input type="number" id="quantidade" name="quantidade" min="1" max="{{ produto.itemestoque_set.first.quantidade }}" value="1" class="form-control me-2" style="width: 80px;">
+                  <span class="card-text">{{ produto.unidade }}</span>
+                </div>
+                <button type="submit" class="btn btn-primary w-100"> + Adicionar </button>
+              </form>
+            {% else %}
+              <!-- Exibe mensagem se produto estiver fora de estoque -->
+              <p class="card-text text-danger">Produto fora de estoque</p>
+              <a href="{% url 'homepage' %}" class="btn btn-secondary w-100">Voltar para a Loja</a>
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-    {% empty %}
-    <p>Nenhum produto encontrado.</p>
     {% endfor %}
   </div>
 </div>

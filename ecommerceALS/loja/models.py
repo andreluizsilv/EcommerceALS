@@ -47,17 +47,19 @@ class Produto(models.Model):
     preco = models.DecimalField(max_digits=10, decimal_places=2)
     unidade = models.CharField(max_length=200, null=True, blank=True)
     ativo = models.BooleanField(default=True)
-    departamento = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.SET_NULL)
+    departamento = models.ForeignKey(Departamento, null=True, blank=True, on_delete=models.SET_NULL, related_name="produtos")
     tipo = models.ForeignKey(Tipo, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f'Nome: {self.nome_produto} , Setor: {self.departamento} ,  {self.tipo} , Preço: {self.preco}'
+        return f'Nome: {self.nome_produto} - Setor: {self.departamento} -  {self.tipo} - Preço: {self.preco} {self.unidade}'
 
 
 class ItemEstoque(models.Model):
     produto = models.ForeignKey(Produto, null=True, blank=True, on_delete=models.SET_NULL)
     quantidade = models.IntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.produto}  - Quantidade: {self.quantidade}'
 
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, null=True, blank=True, on_delete=models.SET_NULL)

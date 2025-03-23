@@ -1,0 +1,316 @@
+1. Planejamento e Estruturação do Projeto
+Definir Setores e Funcionalidades:
+
+Administração: Gerenciar usuários, permissões, relatórios de vendas, finanças, preços e promoções.
+
+Estoque: Controlar entrada/saída de produtos, gerenciar estoque baixo.
+
+Vendas: Atender clientes, gerenciar pedidos online, processar pagamentos e suporte pós-venda.
+
+Logística e Entrega: Organizar rotas, integrar APIs de transporte e gerenciar entregadores.
+
+Marketing e CRM: Criar campanhas, gerenciar fidelidade e enviar notificações.
+
+Modelos de Dados:
+
+Usuários e Permissões: Cliente, Funcionário (Estoquista, Vendedor, Entregador), Administrador.
+
+Produtos e Categorias: Categorias (Frutas, Verduras, etc.) e Produtos (nome, preço, estoque, validade).
+
+Pedidos e Pagamentos: Pedidos (cliente, itens, status) e métodos de pagamento (Pix, Cartão, Boleto).
+
+Logística e Entrega: Endereço, rastreamento e tempo estimado de entrega.
+
+Marketing e CRM: Notificações, promoções e programa de fidelidade.
+
+2. Implementação do Modelo de Usuários Personalizado
+Substituir o Modelo de Usuário Padrão:
+
+Criar um modelo customizado com campos adicionais (cargo, setor).
+
+Definir cargos disponíveis (Cliente, Estoquista, Vendedor, Entregador, Administrador).
+
+Configurar o Django para Usar o Novo Modelo:
+
+Atualizar settings.py para apontar para o novo modelo de usuário.
+
+Criar e Aplicar Migrações:
+
+Rodar comandos para criar e aplicar migrações no banco de dados.
+
+Testar Criação de Usuários:
+
+Criar usuários no Django Admin e verificar permissões.
+
+3. Configuração de Autenticação e Permissões
+Configurar Autenticação com DRF e JWT:
+
+Instalar e configurar bibliotecas para autenticação via tokens JWT.
+
+Criar Endpoints de Autenticação:
+
+Criar rotas para registro, login e refresh de tokens.
+
+Proteger Rotas com Permissões:
+
+Restringir acesso a rotas sensíveis com permissões personalizadas.
+
+Testar Autenticação e Permissões:
+
+Verificar login, geração de tokens e acesso a rotas protegidas.
+
+4. Implementação de Produtos e Categorias
+Criar Modelos de Produtos e Categorias:
+
+Definir campos como nome, descrição, preço, estoque e validade.
+
+Criar Views para Gerenciar Produtos:
+
+Implementar endpoints para listar, criar, atualizar e deletar produtos.
+
+Configurar URLs e Permissões:
+
+Criar rotas para produtos e categorias.
+
+Restringir acesso com base no cargo do usuário.
+
+Testar Endpoints:
+
+Verificar funcionalidades com ferramentas como Postman.
+
+5. Controle de Estoque
+Adicionar Campo de Estoque no Modelo de Produto:
+
+Criar campo para quantidade em estoque e método para atualização.
+
+Criar Views para Gerenciar Estoque:
+
+Implementar endpoints para atualizar e visualizar estoque.
+
+Configurar URLs e Permissões:
+
+Criar rotas para gerenciar estoque.
+
+Definir permissões para Estoquista, Vendedor e Administrador.
+
+Testar Funcionalidades:
+
+Verificar atualização e visualização de estoque.
+
+6. Sistema de Pagamento
+Definir Métodos de Pagamento:
+
+Pix, Cartão de Crédito/Débito, Boleto Bancário.
+
+Criar Modelo de Pagamento:
+
+Vincular pagamento a pedidos e definir status (pendente, aprovado, recusado).
+
+Criar Views para Processar Pagamentos:
+
+Implementar endpoints para iniciar e verificar pagamentos.
+
+Simular Integração com APIs de Pagamento:
+
+Criar lógica para processar pagamentos fictícios.
+
+Configurar URLs e Permissões:
+
+Criar rotas para gerenciar pagamentos.
+
+Restringir acesso com base no cargo do usuário.
+
+Atualizar Estoque e Pedidos:
+
+Reduzir estoque e atualizar status do pedido após pagamento aprovado.
+
+Testar Endpoints:
+
+Verificar processamento de pagamentos e atualização de pedidos.
+
+7. Área Administrativa
+Criar Painel Administrativo com Django Admin:
+
+Registrar modelos e customizar listagens e filtros.
+
+Definir Permissões para Administradores:
+
+Restringir acesso com base no cargo do usuário.
+
+Criar Dashboard Administrativo:
+
+Implementar painel com métricas de vendas, estoque e pagamentos.
+
+Criar Endpoints para Gestão:
+
+Implementar rotas para listar e filtrar pedidos, estoque e pagamentos.
+
+Implementar Logs de Auditoria:
+
+Registrar ações administrativas para auditoria.
+
+Testar Acesso e Funcionalidades:
+
+Verificar permissões e funcionalidades no Django Admin e via API.
+
+8. Testes e Validação
+Testar Fluxo Completo do Sistema:
+
+Criar conta, adicionar produtos ao carrinho, finalizar pedido, acompanhar entrega e avaliar produtos.
+
+Verificar Integração Entre Setores:
+
+Garantir que estoque, vendas, logística e pagamentos estejam integrados.
+
+Realizar Testes de Permissões:
+
+Verificar se cada cargo tem acesso apenas às funcionalidades permitidas.
+
+Ajustes Finais:
+
+Corrigir bugs e otimizar desempenho.
+
+9. Implantação e Monitoramento
+Preparar Ambiente de Produção:
+
+Configurar servidor, banco de dados e variáveis de ambiente.
+
+Implantar Aplicação:
+
+Subir o sistema em um servidor ou plataforma de hospedagem.
+
+Monitorar Métricas:
+
+Acompanhar desempenho, vendas e estoque em tempo real.
+
+Manutenção Contínua:
+
+Realizar atualizações e correções conforme necessário.
+
+
+Categorias e Subcategorias para o Database
+1. Hortifruti
+    Frutas: Maçã, banana, laranja, morango, melancia, etc.
+
+    Legumes: Tomate, cenoura, batata, abobrinha, etc.
+
+    Hortaliças: Alface, rúcula, couve, espinafre, etc.
+
+    Ervas e Temperos: Salsinha, cebolinha, manjericão, alecrim, etc.
+
+    Produtos Orgânicos: Frutas, legumes e hortaliças orgânicas.
+
+    Produtos Especiais: Cogumelos, brotos, flores comestíveis.
+
+2. Açougue
+    Carnes Bovinas: Picanha, alcatra, contrafilé, costela, etc.
+
+    Carnes Suínas: Lombo, pernil, bacon, costelinha, etc.
+
+    Aves: Frango inteiro, peito de frango, coxa, asa, etc.
+
+    Peixes e Frutos do Mar: Salmão, tilápia, camarão, polvo, etc.
+
+    Embutidos: Linguiça, salsicha, presunto, mortadela, etc.
+
+    Carnes Especiais: Cordeiro, cabrito, pato, etc.
+
+    Produtos Temperados: Carne moída temperada, frango marinado, etc.
+
+3. Padaria
+    Pães: Pão francês, pão integral, pão de forma, ciabatta, etc.
+
+    Bolos: Bolo de chocolate, bolo de cenoura, bolo simples, etc.
+
+    Salgados: Coxinha, pastel, empada, pão de queijo, etc.
+
+    Tortas: Torta de frango, torta de palmito, torta doce, etc.
+
+    Doces: Sonho, brigadeiro, croissant, etc.
+
+    Produtos Integrais: Pães, bolos e biscoitos integrais.
+
+    Confeitaria: Cookies, brownies, cupcakes, etc.
+
+4. Bebidas
+    Águas: Água mineral com gás, sem gás, água saborizada.
+
+    Refrigerantes: Coca-Cola, Guaraná, Sprite, etc.
+
+    Sucos: Sucos naturais, sucos de caixinha, polpas de frutas.
+
+    Bebidas Alcoólicas: Cervejas, vinhos, espumantes, destilados (vodka, whisky, etc.).
+
+    Bebidas Energéticas: Red Bull, Monster, etc.
+
+    Chás: Chá verde, chá preto, chá de frutas, etc.
+
+    Bebidas Especiais: Kombucha, água de coco, isotônicos.
+
+5. Laticínios
+    Leites: Leite integral, desnatado, sem lactose, etc.
+
+    Queijos: Mussarela, prato, parmesão, ricota, etc.
+
+    Iogurtes: Iogurte natural, grego, com frutas, etc.
+
+    Manteiga e Margarina: Manteiga com sal, sem sal, margarina.
+
+    Cremes: Creme de leite, chantilly, etc.
+
+    Produtos Funcionais: Leites fermentados, probióticos.
+
+6. Mercearia
+    Grãos e Cereais: Arroz, feijão, lentilha, quinoa, aveia, etc.
+
+    Massas: Macarrão, espaguete, lasanha, etc.
+
+    Farinhas: Farinha de trigo, farinha de mandioca, etc.
+
+    Óleos e Azeites: Óleo de soja, azeite de oliva, etc.
+
+    Enlatados: Milho, ervilha, seleta de legumes, etc.
+
+    Molhos e Condimentos: Ketchup, mostarda, maionese, etc.
+
+    Doces e Conservas: Geleias, mel, compotas, etc.
+
+7. Limpeza
+    Detergentes: Detergente líquido, em pó, etc.
+
+    Desinfetantes: Desinfetante tradicional, aromatizado.
+
+    Sabões e Amaciantes: Sabão em pó, amaciante, etc.
+
+    Limpeza Geral: Álcool, água sanitária, multiuso.
+
+    Papéis: Papel toalha, papel higiênico, guardanapos.
+
+8. Higiene Pessoal
+    Shampoos e Condicionadores: Para diferentes tipos de cabelo.
+
+    Sabonetes: Sabonete líquido, em barra, íntimo.
+
+    Cremes e Hidratantes: Cremes corporais, faciais, etc.
+
+    Desodorantes: Roll-on, spray, etc.
+
+    Produtos para Barbear: Espumas, lâminas, etc.
+
+9. Produtos para Pets
+    Rações: Para cães, gatos, etc.
+
+    Petiscos: Biscoitos, ossinhos, etc.
+
+    Acessórios: Coleiras, brinquedos, etc.
+
+    Higiene: Shampoo para pets, tapetes higiênicos.
+
+10. Outros
+    Congelados: Pizza, lasanha, sorvetes, etc.
+
+    Energéticos e Suplementos: Barras de cereal, whey protein, etc.
+
+    Produtos Sem Glútem/Lactose: Pães, bolos, massas, etc.
+
+    Kits Prontos: Kits para churrasco, jantares, etc.
