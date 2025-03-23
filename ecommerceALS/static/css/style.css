@@ -69,4 +69,15 @@ body {
 }
 
 
+.navbar .carrinho {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.navbar .qtd-carrinho {
+    color: #000 !important;
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    margin-left: 5px !important;
+}
 

@@ -59,7 +59,7 @@ class ItemEstoque(models.Model):
     quantidade = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'{self.produto}  - Quantidade: {self.quantidade}'
+        return f'{self.produto.nome_produto}  - Quantidade: {self.quantidade}'
 
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, null=True, blank=True, on_delete=models.SET_NULL)
@@ -68,6 +68,8 @@ class Pedido(models.Model):
     endereco = models.ForeignKey(Endereco, null=True, blank=True, on_delete=models.SET_NULL)
     data_finalizacao = models.DateTimeField(null=True, blank=True)
 
+    def __str__(self):
+        return f"Cliente: {self.cliente.email}   -  id_pedido:  {self.id} - Finalizado: {self.finalizado}"
 
 
 class ItensPedido(models.Model):
@@ -75,7 +77,8 @@ class ItensPedido(models.Model):
     quantidade = models.IntegerField(default=0)
     pedido = models.ForeignKey(Pedido, null=True, blank=True, on_delete=models.SET_NULL)
 
-
+    def __str__(self):
+        return f'IdProduto: {self.pedido.id} - Produto: {self.item_estoque.produto.nome_produto} - Preço: {self.item_estoque.produto.preco}{self.item_estoque.produto.unidade}'
 class Banner (models.Model):
     imagem = models.ImageField(null=True, blank=True)
     link_destino = models.CharField(max_length=400, null=True, blank=True)

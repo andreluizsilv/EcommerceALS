@@ -21,35 +21,24 @@ def loja(request, nome_departamento=None):
     }
     return render(request, 'loja.html', context)
 
-def ver_produto(request, id_produto):
-    produto = get_object_or_404(Produto, id=id_produto)
-    itens_estoque = ItemEstoque.objects.filter(produto=produto, quantidade__gt=0)
-
-    # Verifica se há itens em estoque
-    if itens_estoque.exists():
-        quantidade_disponivel = sum(item.quantidade for item in itens_estoque)
-        itens_estoque = True
-    else:
-        quantidade_disponivel = 0
-        itens_estoque = False
-    context = {
-        'produto': produto,
-        'itens_estoque': itens_estoque,
-        'quantidade_disponivel': quantidade_disponivel,
-    }
-    return render(request, 'ver_produto.html', context)
 
 
 def adicionar_carrinho(request, id_produto):
     if request.method == "POST" and id_produto:
-        print("Enviou Formulario")
+        quantidade = request.POST.dict()
+        print(quantidade, id_produto)
         return redirect('carrinho')
     else:
         return redirect('loja')  # Adicionado o 'return'
 
 
 def carrinho(request):
-    return render(request,'carrinho.html')
+    if request.user.is_authenticated:
+        cliente = request.user.cliente
+        pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
+        itens_pedidos = ItensPedido.objects.filter(pedido=pedido)
+        context = {'itens_pedidos': itens_pedidos, 'pedido': pedido}
+    return render(request,'carrinho.html', context)
 
 def checkout(request):
     return render(request,'checkout.html')
