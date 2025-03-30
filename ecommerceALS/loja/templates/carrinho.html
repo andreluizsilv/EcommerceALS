@@ -22,9 +22,9 @@
             <div class="col-md-8">
               <div class="card-body">
                 <h5 class="card-title">{{ item.item_estoque.produto.nome_produto }}</h5>
-                <p class="card-text">Quantidade: {{ item.quantidade }}</p>
+                <p class="card-text">Quantidade: <button> - </button> {{ item.quantidade }} <button> + </button></p>
                 <p class="card-text">Preço Unitário: R$ {{ item.item_estoque.produto.preco }}</p>
-                <p class="card-text">Subtotal: R$ {{ item.get_total }}</p>
+                <p class="card-text">Subtotal: R$ {{ item.preco_total_itens }}</p>
               </div>
             </div>
           </div>
@@ -37,7 +37,8 @@
     <div class="col-md-8">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Total do Pedido: R$ {{ pedido.get_cart_total }}</h5>
+          <h5 class="card-title">Total de Produto:  {{ pedido.qtde_total }}</h5>
+          <h5 class="card-title">Pedido Total: R$ {{ pedido.preco_total_produtos }}</h5>
           <a class="btn btn-primary w-100" href="{% url 'checkout' %}">Checkout</a>
         </div>
       </div>

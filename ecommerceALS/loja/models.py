@@ -61,6 +61,7 @@ class ItemEstoque(models.Model):
     def __str__(self):
         return f'{self.produto.nome_produto}  - Quantidade: {self.quantidade}'
 
+
 class Pedido(models.Model):
     cliente = models.ForeignKey(Cliente, null=True, blank=True, on_delete=models.SET_NULL)
     finalizado = models.BooleanField(default=False)
@@ -71,6 +72,18 @@ class Pedido(models.Model):
     def __str__(self):
         return f"Cliente: {self.cliente.email}   -  id_pedido:  {self.id} - Finalizado: {self.finalizado}"
 
+    @property
+    def qtde_total(self):
+        itens_pedido = ItensPedido.objects.filter(pedido__id=self.id)
+        quantidade = sum([item.quantidade for item in itens_pedido])
+        return quantidade
+
+    @property
+    def preco_total_produtos(self):
+        itens_pedido = ItensPedido.objects.filter(pedido__id=self.id)
+        preco = sum([item.preco_total_itens for item in itens_pedido])
+        return preco
+
 
 class ItensPedido(models.Model):
     item_estoque = models.ForeignKey(ItemEstoque, null=True, blank=True, on_delete=models.SET_NULL)
@@ -79,6 +92,13 @@ class ItensPedido(models.Model):
 
     def __str__(self):
         return f'IdProduto: {self.pedido.id} - Produto: {self.item_estoque.produto.nome_produto} - Preço: {self.item_estoque.produto.preco}{self.item_estoque.produto.unidade}'
+
+    @property
+    def preco_total_itens(self):
+        return self.quantidade * self.item_estoque.produto.preco
+
+
+
 class Banner (models.Model):
     imagem = models.ImageField(null=True, blank=True)
     link_destino = models.CharField(max_length=400, null=True, blank=True)
