@@ -28,52 +28,56 @@ def carrinho(request):
         cliente = request.user.cliente
         pedido, criado = Pedido.objects.get_or_create(cliente=cliente, finalizado=False)
         itens_pedidos = ItensPedido.objects.filter(pedido=pedido)
+        for item in itens_pedidos:
+            print(item.quantidade)
         context = {'itens_pedidos': itens_pedidos, 'pedido': pedido}
     return render(request,'carrinho.html', context)
 
 
 def adicionar_carrinho(request, id_produto):
-    if request.method == "POST":
-        try:
-            quantidade = int(request.POST.get('quantidade', 1))
-            if request.user.is_authenticated:
-                cliente = request.user.cliente
-            else:
-                return redirect('login')
-            item_estoque = ItemEstoque.objects.get(produto__id=id_produto)
-            pedido, criado = Pedido.objects.get_or_create(cliente=cliente,finalizado=False)
-            item_pedido, criado = ItensPedido.objects.get_or_create(pedido=pedido, item_estoque=item_estoque, defaults={'quantidade': quantidade})
-            if not criado:
-                item_pedido.quantidade += quantidade
-                item_pedido.save()
-            return redirect('carrinho')
-        except ItemEstoque.DoesNotExist:
-            return redirect('loja')
-        except Exception as e:
-            return redirect('loja')
-    return redirect('loja')
+    if request.method == 'POST':
+        quantidade = int(request.POST.get('quantidade', 1))
+
+        item_estoque = ItemEstoque.objects.get(id=id_produto)
+
+        # Busca ou cria um pedido em andamento para o cliente
+        pedido, _ = Pedido.objects.get_or_create(cliente=request.user.cliente, finalizado=False)
+
+        # Busca ou cria um item no pedido
+        item_pedido, item_criado = ItensPedido.objects.get_or_create(
+            pedido=pedido,
+            item_estoque=item_estoque,
+            defaults={'quantidade': quantidade}
+        )
+
+        if not item_criado:
+            item_pedido.quantidade += quantidade
+            item_pedido.save()
+
+        return redirect('carrinho')
 
 
-def remover_carrinho(request):
-    if request.method == "POST":
-        try:
-            quantidade = int(request.POST.get('quantidade', 1))
-            if request.user.is_authenticated:
-                cliente = request.user.cliente
+def remover_carrinho(request, id_produto):
+    if request.method == 'POST':
+        quantidade = int(request.POST.get('quantidade', 1))
+
+        item_estoque = ItemEstoque.objects.get(id=id_produto)
+        pedido = Pedido.objects.get(cliente=request.user.cliente, finalizado=False)
+
+        item_pedido, item_criado = ItensPedido.objects.get_or_create(
+            pedido=pedido,
+            item_estoque=item_estoque,
+            defaults={'quantidade': 0}
+        )
+
+        if not item_criado:
+            item_pedido.quantidade -= quantidade
+            if item_pedido.quantidade <= 0:
+                item_pedido.delete()
             else:
-                return redirect('login')
-            item_estoque = ItemEstoque.objects.get(produto__id=id_produto)
-            pedido, criado = Pedido.objects.get_or_create(cliente=cliente,finalizado=False)
-            item_pedido, criado = ItensPedido.objects.get_or_create(pedido=pedido, item_estoque=item_estoque, defaults={'quantidade': quantidade})
-            if not criado:
-                item_pedido.quantidade -= quantidade
                 item_pedido.save()
-            return redirect('carrinho')
-        except ItemEstoque.DoesNotExist:
-            return redirect('loja')
-        except Exception as e:
-            return redirect('loja')
-    return redirect('loja')
+
+        return redirect('carrinho')
 
 
 def checkout(request):

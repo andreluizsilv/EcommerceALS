@@ -81,3 +81,35 @@ body {
     margin-left: 5px !important;
 }
 
+.img-moldura {
+    border: 2px solid #00CED1;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+}
+
+
+.btn-outline-success:hover {
+    background-color: #00CED1;
+    color: white;
+    border-color: #00CED1;
+}
+
+.btn-outline-danger:hover {
+    background-color: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+.qtd-item {
+    color: #000;
+    font-weight: bold;
+}
+
